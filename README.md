@@ -75,7 +75,7 @@ To load CommonJS modules, simply `require()` them from your app (or a module _it
    include the leading './'.
 
 
-## Loading jQuery as we Webpack Plugin
+## Loading jQuery as a Webpack Plugin
 
 Instead of loading jQuery ourselves, we can have Webpack do it.
 
