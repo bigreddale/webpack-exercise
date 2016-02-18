@@ -75,27 +75,11 @@ To load CommonJS modules, simply `require()` them from your app (or a module _it
    include the leading './'.
 
 
-## Loading non-CommonJS JavaScript Files
-
-Webpack starts with the config file you created earlier, and traces all `require()`
-statements to load the modules they specify.
-
-To load a file that is not packaged as a CommonJS module,
-simply add it to your `webpack.config.js` file:
-
-    	...
-    	entry: ['./src/js/app.js', './src/js/lib/jquery-2.2.0.min.js'],
-    	...
-
-We've used jQuery purely for example. (jQuery does also test to see
-whether it's being `require()`ed, so you can use it in that form too.)
-
-
-## An Alternate way to load jQuery
+## Loading jQuery as we Webpack Plugin
 
 Instead of loading jQuery ourselves, we can have Webpack do it.
 
-1. Install jQuery locally using `npm`. Modify your `webpack.config.js`:
+1. Install jQuery locally using `npm install jquery`. Modify your `webpack.config.js`:
 
 	```
 	var webpack = require('webpack');
@@ -224,14 +208,15 @@ a loader that's run before other loaders.
    your config. It will work like this:
    
 	```
-	{
-        module: {
-            loaders: [
-                { test: /\.js$/, loader: "strip-loader?strip[]=debug" }
-            ]
-        }
-    };
-    devConfig.module.loaders.push(stripLoader);
+	var WebpackStripLoader = require('strip-loader');
+
+	var stripLoader = {
+		test: /\.js$/,
+		exclude: /node_modules/,
+		loader: WebpackStripLoader.loader('console.log', 'debug')
+	};
+
+	devConfig.module.loaders.push(stripLoader);
 	```
     
    Use a similar syntax to remove (say) `console.log` statements.
